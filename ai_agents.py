@@ -13,7 +13,7 @@ print("Loading environment variables")
 
 groq_client = AsyncOpenAI(
     api_key=os.getenv("GROQ_API_KEY"),
-    base_url="https://api.groq.com/openai/v1"
+    base_url=os.getenv("BASE_URL")
 )
 
 print("Groq API client initialized")
@@ -75,12 +75,12 @@ def send_email(subject: str, body: str):
             
             result = resend.Emails.send({
                 "from": os.environ.get("EMAIL_FROM", "Acme <onboarding@resend.dev>"),
-                "to": ["saifihassan656@gmail.com"],
+                "to": ["demo@gmail.com"],
                 "subject": subject,
                 "html": body,
                 "text": "Welcome! This email was sent using Resend's Python SDK",
             })
-            print("Email sent successfully to: saifihassan656@gmail.com")
+            print("Email sent successfully to: demo@gmail.com")
             return "Email sent successfully"
         except Exception as e:
             print(f"Error sending email: {str(e)}")
