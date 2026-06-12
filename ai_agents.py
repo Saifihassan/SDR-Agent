@@ -4,6 +4,7 @@ import os
 from prompts import MANAGER_AGENT, PROFESSIONAL_SDR, HUMOUROUS_SDR, CONCISE_SDR
 from agents import Agent, OpenAIChatCompletionsModel, function_tool, trace
 import resend
+from pydantic import BaseModel 
 
 print("Initializing AI Agents System")
 
@@ -18,7 +19,7 @@ groq_client = AsyncOpenAI(
 
 print("Groq API client initialized")
 
-model= OpenAIChatCompletionsModel(openai_client=groq_client, model="qwen/qwen3-32b")
+model= OpenAIChatCompletionsModel(openai_client=groq_client, model="openai/gpt-oss-120b")
 
 print("Model configured (qwen/qwen3-32b)")
 
@@ -75,7 +76,7 @@ def send_email(subject: str, body: str):
             
             result = resend.Emails.send({
                 "from": os.environ.get("EMAIL_FROM", "Acme <onboarding@resend.dev>"),
-                "to": ["demo@gmail.com"],
+                "to": ["saifihassan656@gmail.com"],
                 "subject": subject,
                 "html": body,
                 "text": "Welcome! This email was sent using Resend's Python SDK",
@@ -91,6 +92,7 @@ manager_agent = Agent(
     name="Manager Agent",   
     instructions=MANAGER_AGENT,
     tools=[tool1, tool2, tool3, send_email],
+    
     model=model
 )
 
